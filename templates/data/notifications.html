@@ -1,0 +1,24 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+
+{% for i in results %}
+
+<div class="container">
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+      <h4 class="card-title">{{i.sender_name}} Size  Sergiye Eser Ekleme Talebi Gönderdi</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="/add_new_piece_to_others_exh/{{i.exh_id}}/{{i.notify_id}}" class="card-link">Eser Yükle</a>
+      <a href="/notification_delete/{{i.notify_id}}" class="card-link">İptal Et</a>
+    </div>
+  </div>
+</div>
+
+
+
+{% endfor %}
+
+
+
+{% endblock %}

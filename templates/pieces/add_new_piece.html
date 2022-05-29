@@ -1,0 +1,29 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+<div class="card border-secondary mb-3" style="width: 50%; margin: auto;">
+  <div class="card-header">Eserinizi Ekleyin</div>
+  <div class="card-body text-secondary">
+  
+    <form  action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form.visible_fields|slice:"4" %}
+                        <div class="">
+                            <h4>{{field.label}} &nbsp;</h4>
+                            
+                            <input style="width: 50%; margin-bottom: 10px;" type="{{ field.field.widget.input_type }}" name="{{field.html_name}}">
+                        </div>
+        {% endfor %}
+
+        <p>{{form.category.label}}</p>
+        {{ form.category }}
+
+
+
+        <p><input  style="margin-top: 20px;" class="btn login_btn" type="submit" value="Eseri Yükle"></p>
+    </form>
+  
+  </div>
+</div>
+{% endblock %}

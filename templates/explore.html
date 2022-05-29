@@ -1,0 +1,143 @@
+{% extends 'quest_base.html' %}
+
+{% block content %}
+
+
+    
+    
+    
+    <div class="container" style="margin-top: 50px;">
+
+
+      <div style="max-height: 550px; min-width: auto;" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img style="max-height: 550px; min-width: auto;" src="../media/van-goh.jpg" class="d-block w-100" alt="...">
+          </div>
+          {% for a in tops|slice:"5"|dictsortreversed:"p_likes" %}
+          <div class="carousel-item">
+            <a href="/piece_details/{{ a.p_id }}"><img style="max-height: 550px; min-width: auto;" src="../media/{{ a.p_url }}" class="d-block w-100" alt="..."></a>
+          </div>
+          {% endfor %}
+          
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+  </div>
+
+
+
+<div class="container">
+  
+<ul style="margin-top: 20px;" class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Eserler</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Sergiler</button>
+  </li>
+  
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    
+    <h5 style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">Beğenebileceğiniz Eserler</h5>
+    <div style="width: 90%; overflow: auto; white-space: nowrap; margin-left: 10px;">
+      {% for piece in pieces_list|dictsortreversed:"p_likes" %}
+   <div class="card" style="width: 150px; display: inline-block; margin-right: 10px;">
+  <img style="height: 150px; width: 150px" src="../media/{{ piece.p_url }}" class="card-img-top" alt="...">
+  <div style="margin-bottom: 12px; white-space: normal;" class="card-body">
+    <center><strong><h6>{{ piece.p_name }}</h6></strong></center>
+  </div>
+</div>
+      {% endfor %}
+  
+</div>
+  <center>
+
+  {% for piece in p_dict_list|dictsortreversed:"hype" %}
+
+    <center>
+
+  <div class="card mb-4" style="max-width: 950px; max-height: 300px; margin-top: 40px;">
+      <div class="row no-gutters">
+        <div class="col-md-4" >
+          <a href="/piece_details/{{piece.id}}"><img src="../media/{{ piece.picture_url }}" class="card-img" style="max-height: 300px;" alt="..."></a>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body" style="text-align: center;">
+          <h4 style="margin-bottom: 30px;" class="card-title">{{ piece.name }}</h4>
+            <p class="card-text">{{ piece.description }}</p>
+            <i style="float: left;" class="fa fa-heart"></i><strong style="float: left;">{{ piece.likes }}</strong>
+                  <a style="float: right;" href="/user/{{ piece.owner_id }}">@{{ piece.owner_name }}</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </center>
+
+  {% endfor %}
+
+</center>  
+
+
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    
+    <h5 style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">Beğenebileceğiniz Sergiler</h5>
+    <div style="width: 90%; overflow: auto; white-space: nowrap; margin-left: 10px;">
+    {% for j in exhibitions_list %}
+
+      <div class="card" style="width: 200px; display: inline-block; margin-right: 10px;">
+  <img style="height: 100px; width: 200px" src="../media/{{ j.e_thumbnail }}" class="card-img-top" alt="...">
+  <div style="margin-bottom: 12px; white-space: normal;" class="card-body">
+    <center><strong><h6>{{ j.e_name }}</h6></strong></center>
+  </div>
+</div>
+
+    {% endfor %}
+  </div>
+
+  {% for exh in e_dict_list %}
+
+    <center>
+          <a style="color: inherit;" href="/exhibition_details/{{ exh.id }}"><div>
+            <h4 style=" margin-top: 40px;">{{ exh.name }}</h4>
+       
+            <div class="parent" style="position: relative;top: 0;left: 0;">
+              <img class="image1" style="position: relative;top: 0;left: 0;border: 1px black solid;width: 800px;height: 300px;" src="../media/{{exh.thumbnail}}"/>
+              <img class="image2" style="position: absolute;top: 0;left: 300px;border: 1px black solid; width: 200px ;border-width: 2px;" src="../media/{{exh.user_picture}}" />
+            </div>
+          </div>
+        </a>
+        <br><br>
+       </center>
+  {% endfor %}
+
+  </div>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

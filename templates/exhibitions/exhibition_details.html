@@ -1,0 +1,113 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+
+<div class="container">
+	{% if session_user_id == owner.id %}
+
+
+
+
+<div style="float: right; margin-left: 10px;" class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Eser Ekle 
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li> <a class="dropdown-item" href="/add_new_piece_to_exh/{{ exh.id }}">Kendi Eseriniz</a></li>
+    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Başkasının Eseri</a></li>
+  </ul>
+</div>
+
+
+
+  
+
+  <div class="modal fade modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Eser Sahibini Seçiniz</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form action="/add_new_piece_to_exh_search_user/{{exh.id}}" method="POST" class="form-inline my-2 my-lg-0">
+        {% csrf_token %}
+        <input name="search_input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eser Sahibini Seçiniz</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/add_new_piece_to_exh_search_user/{{exh.id}}" method="POST" class="form-inline my-2 my-lg-0">
+          {% csrf_token %}
+          <input name="search_input" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+	<a style="float: right" class="btn btn-primary" href="/exhibition_update/{{exh.id}}/">Düzenle</a>
+	{% endif %}
+  <div style="margin-top: 30px;">
+	<center><h3>{{exh.name}}</h3></center>
+	<hr>
+	<p>{{exh.description}}</p>
+	<strong>Yayımlanma Tarihi: {{exh.release_date}}</strong>
+	<h4 style="float: right;"><a href="/user/{{ owner.id }}">{{ owner.first_name }} {{ owner.last_name }}</a></h4>
+	<br>
+	<hr>
+</div>
+
+	{% for piece in pieces %}
+
+          <center>
+        
+        <div class="card mb-4" style="max-width: 950px; max-height: 300px; margin-top: 40px;">
+            <div class="row no-gutters">
+              <div class="col-md-4" >
+                <a href="/piece_details/{{piece.id}}"><img src="../../media/{{ piece.picture_url }}" class="card-img" style="max-height: 300px;" alt="..."></a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="text-align: center;">
+                <h4 style="margin-bottom: 30px;" class="card-title">{{ piece.name }}</h4>
+                  <p class="card-text">{{ piece.description }}</p>
+                  
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </center>
+
+
+        {% endfor %}
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}

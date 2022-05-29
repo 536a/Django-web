@@ -1,0 +1,44 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+<div class="card border-secondary mb-3" style="width: 50%; margin: auto;">
+  <div class="card-header">Serginizi Ekleyin</div>
+  <div class="card-body text-secondary">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form.visible_fields|slice:'2' %}
+                        <div class="">
+                            <p>{{field.label}}</p>
+                            <input style="width: 50%; margin-bottom: 10px" type="{{ field.field.widget.input_type }}" name="{{field.html_name}}">
+                        </div>
+        {% endfor %}
+
+        <p>{{form.release_date.label}}</p>
+        {{form.release_date}}
+        <p>Kapak Fotoğrafı (Uygun Format : 700x300px)</p>
+        {{form.thumbnail}}
+
+
+
+        <p><input  style="margin-top: 20px;" class="btn login_btn" type="submit" value="Sergiyi Yükle"></p>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,110 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+
+{% if searched %}
+
+{% else %}
+
+<h3>Hiçbir şey aratılmadı.</h3>
+
+{% endif %}
+
+
+
+<div style="margin-top: 50px;margin-left: 50px;" class="col-sm-6 col-md-8">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Sanatçılar</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Eserler</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Sergiler</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <center>
+      {% for user in results_users %}
+            <center>
+
+            <div class="card mb-4" style="max-width: 950px; max-height: 300px; margin-top: 40px;">
+                <div class="row no-gutters">
+                  <div class="col-md-4" >
+                    <a href="/user/{{user.id}}"><img src="../media/{{ user.picture }}" class="card-img" style="max-height: 300px;" alt="..."></a>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body" style="margin: 0;
+                    position: absolute;top: 50%;-ms-transform: translateY(-50%); transform: translateY(-50%);">
+                    <h4 class="card-title">{{ user.first_name }} {{ user.last_name }}</h4>
+
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </center>
+
+            {% endfor %}
+    </center>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <center>
+      {% for piece in results_pieces %}
+        <center>
+
+        <div class="card mb-4" style="max-width: 950px; max-height: 300px; margin-top: 40px;">
+            <div class="row no-gutters">
+              <div class="col-md-4" >
+                <a href="/piece_details/{{piece.id}}"><img src="../media/{{ piece.picture_url }}" class="card-img" style="max-height: 300px;" alt="..."></a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="margin: 0;
+                position: absolute;top: 50%;-ms-transform: translateY(-50%); transform: translateY(-50%);">
+                <h4 class="card-title">{{ piece.name }}</h4>
+                  <p class="card-text">{{ piece.description }}</p>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </center>
+
+        {% endfor %}
+    </center>
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    {% for exh in results_exhibitions %}
+    <center>
+      <a style="color: inherit;" href="/exhibition_details/{{ exh.id }}"><div>
+            <h4 style=" margin-top: 40px;">{{ exh.name }}</h4>
+       
+            <div class="parent" style="position: relative;top: 0;left: 0;">
+              <img class="image1" style="position: relative;top: 0;left: 0;border: 1px black solid;width: 800px;height: 300px;" src="../media/{{exh.thumbnail}}"/>
+              <img class="image2" style="position: absolute;top: 0;left: 300px;border: 1px black solid; width: 200px ;border-width: 2px;" src="../media/{{exh.user_picture}}" />
+            </div>
+          </div>
+        </a>
+        <br><br>
+    </center>
+    {% endfor %}
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

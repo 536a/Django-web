@@ -1,0 +1,131 @@
+{% extends 'quest_base.html' %}
+{% block content %}
+
+<center>
+    <div class="card mb-4" style="max-width: 700px; margin-top: 40px; border-width: 0in;">
+        <div class="row no-gutters">
+          <div class="col-md-4" >
+            <img src="../media/{{ profil.picture }}" class="card-img" alt="..." style="height: 200px; width: 200px; border-radius: 50%;">
+          </div>
+          <div class="col-md-4">
+            <div class="card-body" style="margin-top: 30px;">
+              <h4 class="card-title">{{ profil.first_name }} {{ profil.last_name }} </h4>
+                {% if session_user_id == profil.id %}
+                <a href="/update_user_profile"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                {% endif %}
+              <p class="card-text">{{ followers }} Takipçi</p>
+              
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-body">
+                <ul>
+                {% if not session_user_id == profil.id %}
+                  {% if followed == 0 %}
+                    <a href="/follow/{{ profil.id }}"><button class="btn btn-outline-primary" style="margin-top: 20px; width: 170px;" >Takip Et</button></a>
+
+                  {% else %}
+                    <a href="/unfollow/{{ profil.id }}"><button class="btn btn-outline-primary" style="margin-top: 20px; width: 170px;" >Takibi Bırak</button></a>
+                  {% endif %}
+
+                    <button class="btn btn-outline-primary" style="margin-top: 20px; width: 170px;">Mesaj Gönder</button>
+                  {% endif %}
+                  {% if session_user_id == profil.id %}
+                    <a href="{% url 'Add_New_Piece' %}"><button class="btn btn-outline-primary" style="margin-top: 20px; width: 170px;">Eser Ekle</button></a>
+                    <a href="{% url 'Add_New_Exhibition' %}"><button class="btn btn-outline-primary" style="margin-top: 20px; width: 170px;">Sergi Oluştur</button></a>
+                  {% endif %}
+
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+</center>
+
+
+
+
+
+<div class="container" style="margin-top: 50px;">
+    
+  <ul class="nav nav-tabs" id="myTab" role="tablist" style="padding-left: 550px;">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#pieces" type="button" role="tab" aria-controls="pieces" aria-selected="true">Eserler</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#exhibitions" type="button" role="tab" aria-controls="exhibitions" aria-selected="false">Sergiler</button>
+    </li>
+
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="pieces" role="tabpanel" aria-labelledby="home-tab">
+
+      <center>
+
+        {% for piece in pieces %}
+
+          {% if piece.release_date <= now or session_user_id == profil.id %}
+
+          <center>
+
+        <div class="card mb-4" style="max-width: 950px; max-height: 300px; margin-top: 40px;">
+            <div class="row no-gutters">
+              <div class="col-md-4" >
+                <a href="/piece_details/{{piece.id}}"><img src="../media/{{ piece.picture_url }}" class="card-img" style="max-height: 300px;" alt="..."></a>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body" style="text-align: center;">
+                <h4 style="margin-bottom: 30px;" class="card-title">{{ piece.name }}</h4>
+                  <p class="card-text">{{ piece.description }}</p>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </center>
+        {% endif %}
+
+        {% endfor %}
+
+      </center>
+
+
+    </div>
+    <div class="tab-pane fade" id="exhibitions" role="tabpanel" aria-labelledby="profile-tab">
+
+      <center>
+
+        {% for exhibitions in exh %}
+
+          {% if exhibitions.release_date <= now or session_user_id == profil.id %}
+
+        <center>
+          <a style="color: inherit;" href="/exhibition_details/{{ exhibitions.id }}"><div>
+            <h4 style=" margin-top: 40px;">{{ exhibitions.name }}</h4>
+       
+            <div class="parent" style="position: relative;top: 0;left: 0;">
+              <img class="image1" style="position: relative;top: 0;left: 0;border: 1px black solid;width: 800px;height: 300px;" src="../media/{{exhibitions.thumbnail}}"/>
+              <img class="image2" style="position: absolute;top: 0;left: 300px;border: 1px black solid; width: 200px ;border-width: 2px;" src="../media/{{profil.picture}}" />
+            </div>
+          </div>
+        </a>
+        <br><br>
+       </center>
+
+            {% endif %}
+
+          {% endfor %}
+
+      </center>
+
+    </div>
+  </div>
+
+
+</div>
+  
+
+
+
+{% endblock %}
